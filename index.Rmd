@@ -9,6 +9,68 @@ output:
 
 
 
-## Project thoughts
+```{r}
+library(tidyverse)
+library(sjlabelled)
+library(haven)
+```
 
-I am interested in exploring data related to...
+## Project Proposal 
+
+How can different demographics, geography and socioeconomic status impact approval of climate policy or action on climate change? I hypothesize that the strongest correlation between an explanatory variable and the outcome variable(support for climate policy) will be seen with the separation across partly lines. Additionally there will be a weaker correlation when evaluating race as an explanatory variable. I will test this hypothesis through data collected from the Cumulative CES Policy Preferences which includes policy preferences from 2006 to 2021 and the Cumulative CCES Common Content data which contains many of the explanatory data I will analyze. Both of these data sources are broad surveys that sample random populations across the United States. Throughout my analysis i will use several different explanatory variables which will be in the form of different environmental policies that were surveyed in the CCES data. If I find that there is a greater support for environmental policies among democrats and other demographics that may lean overwhelmingly progressive then my hypothesis will be proven correct. This would be noted by a positive and significant coefficient when I run my regression. 
+
+## Introduction 
+
+Using survey data generated from counties across the United States this project seeks to determine the impact of various demographics, geographic locations, and socioeconomic statuses on various environmental policy preferences. 
+
+
+## Data and Research Design 
+
+To investigate these relationships I relied on data from 2 different sources.
+
+1. Cumulative CES Policy Preferences 
+
+2. Cumulative CCES Common Content
+
+The research design is observational with correlational analysis that makes no assumptions about causal relationships. 
+## Results 
+
+## Conclusion 
+
+```{r}
+library(tidyverse)
+library(haven)
+library(sjlabelled)
+```
+
+```{r}
+ces <- left_join(
+read_dta("cumulative_2006-2021.dta"),
+read_dta("cumulative_ces_policy_preferences.dta")
+) |>
+sjlabelled::as_label()
+
+
+```
+
+```{r Avergy Support for Renewables across US Counties}
+ces |>
+  mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(average = mean(renewable, na.rm = TRUE)) |>
+  ggplot(aes(x = average)) +
+  geom_histogram(aes(y = ..density..))
+```
+
+```{r Bivariate Analysis of Support vs. Unemployment}
+ces |>
+  filter(employ %in% c("Full-Time", "Unemployed")) |>
+  mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(renewable, na.rm = TRUE),
+    prop_unemployed = mean(employ == "Unemployed", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_unemployed, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")
+```
