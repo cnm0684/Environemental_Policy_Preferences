@@ -43,7 +43,7 @@ library(haven)
 library(sjlabelled)
 ```
 
-```{r}
+```{r, echo = FALSE}
 ces <- left_join(
 read_dta("cumulative_2006-2021.dta"),
 read_dta("cumulative_ces_policy_preferences.dta")
@@ -53,7 +53,7 @@ sjlabelled::as_label()
 
 ```
 
-```{r Avergy Support for Renewables across US Counties}
+```{r Avergy Support for Renewables across US Counties, echo = FALSE}
 ces |>
   mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
   group_by(county_fips) |>
@@ -62,7 +62,7 @@ ces |>
   geom_histogram(aes(y = ..density..))
 ```
 
-```{r Bivariate Analysis of Support vs. Unemployment}
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
 ces |>
   filter(employ %in% c("Full-Time", "Unemployed")) |>
   mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
