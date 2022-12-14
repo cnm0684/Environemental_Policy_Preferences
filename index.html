@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1518,11 +1518,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://haven.tidyverse.org'>haven</a></span><span class='op'>)</span></span></code></pre>
+
 </div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
 </div>
 <h2 id="project-proposal">Project Proposal</h2>
 <p>How can different demographics, geography and socioeconomic status impact approval of climate policy or action on climate change? I hypothesize that the strongest correlation between an explanatory variable and the outcome variable(support for climate policy) will be seen with the separation across partly lines. Additionally there will be a weaker correlation when evaluating race as an explanatory variable. I will test this hypothesis through data collected from the Cumulative CES Policy Preferences which includes policy preferences from 2006 to 2021 and the Cumulative CCES Common Content data which contains many of the explanatory data I will analyze. Both of these data sources are broad surveys that sample random populations across the United States. Throughout my analysis i will use several different explanatory variables which will be in the form of different environmental policies that were surveyed in the CCES data. If I find that there is a greater support for environmental policies among democrats and other demographics that may lean overwhelmingly progressive then my hypothesis will be proven correct. This would be noted by a positive and significant coefficient when I run my regression.</p>
@@ -1531,22 +1533,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="data-and-research-design">Data and Research Design</h2>
 <p>To investigate these relationships I relied on data from 2 different sources.</p>
 <ol type="1">
-<li><p><strong>Cumulative CES Policy Preferences</strong> which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to 3 of these preferences enviro_carbon(support of EPA regulation on carbon emmissions), enviro_renewable(support of mandatory minimum levels of renewable energy generation per state), and enviro_airwateracts(support of strengthening the Clean Air Act and Clean Water Act even if it may cost US jobs)</p></li>
+<li><p><strong>Cumulative CES Policy Preferences</strong> which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to only one of these policy preferences enviro_carbon. The question asked to respondents on this policy preference asked whether the respondent believe that the power should be <strong>given</strong> to the Environmental Protection Agency to regulate carbon dioxide emissions.</p></li>
 <li><p><strong>Cumulative CCES Common Content</strong> which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. A few of said variables involve demographic variables such as race and gender, geographical location, partisan identity, and family income.</p></li>
 </ol>
-<p>The research design is observational with correlational analysis that makes no assumptions about causal relationships.
-## Results</p>
+<p>The research design is observational with correlational analysis that makes no assumptions about causal relationships.</p>
+<p>The Cumulative CES Policy Preferences data provides the outcome variable, <strong>enviro_carbon</strong>. This preference were obtained through a survey where respondents could select support or oppose for the policy. With this in mind, this of the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of EPA carbon regulation within the entirety of the country, and second, the proportion of support across every county within the US.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<h2 id="results">Results</h2>
 <h2 id="conclusion">Conclusion</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://haven.tidyverse.org'>haven</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-
-</div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/Avergy%20Support%20for%20Renewables%20across%20US%20Counties-1.png" width="624" /></p>
 </div>

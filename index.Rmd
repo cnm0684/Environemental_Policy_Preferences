@@ -7,27 +7,27 @@ output:
     self_contained: false
 ---
 
-```{r}
-
-options(
-  knitr.kable.NA = '',
-  width = 100)
-knitr::opts_chunk$set(
-  echo = FALSE,
-  message = FALSE,
-  warning = FALSE,
-  fig.align = "center")
-```
-
-
-
-```{r}
+```{r, echo = FALSE}
 library(tidyverse)
 library(sjlabelled)
 library(haven)
 library(ggridges)
+library(broom)
 ```
 
+```{r, echo = FALSE}
+ces <- left_join(
+read_dta("cumulative_2006-2021.dta"),
+read_dta("cumulative_ces_policy_preferences.dta")
+) |>
+sjlabelled::as_label()
+```
+
+```{r, echo = FALSE}
+outcome_ces <- ces |>
+  select("year", "case_id", "weight", "weight_cumulative", "state", "county_fips", "enviro_carbon", "enviro_renewable", "enviro_airwateracts") |>
+  drop_na()
+```
 ## Project Proposal 
 
 How can different demographics, geography and socioeconomic status impact approval of climate policy or action on climate change? I hypothesize that the strongest correlation between an explanatory variable and the outcome variable(support for climate policy) will be seen with the separation across partly lines. Additionally there will be a weaker correlation when evaluating race as an explanatory variable. I will test this hypothesis through data collected from the Cumulative CES Policy Preferences which includes policy preferences from 2006 to 2021 and the Cumulative CCES Common Content data which contains many of the explanatory data I will analyze. Both of these data sources are broad surveys that sample random populations across the United States. Throughout my analysis i will use several different explanatory variables which will be in the form of different environmental policies that were surveyed in the CCES data. If I find that there is a greater support for environmental policies among democrats and other demographics that may lean overwhelmingly progressive then my hypothesis will be proven correct. This would be noted by a positive and significant coefficient when I run my regression. 
@@ -41,16 +41,18 @@ Using survey data generated from counties across the United States this project 
 
 To investigate these relationships I relied on data from 2 different sources.
 
-1. **Cumulative CES Policy Preferences** which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to 3 of these preferences enviro_carbon(support of EPA regulation on carbon emmissions), enviro_renewable(support of mandatory minimum levels of renewable energy generation per state), and enviro_airwateracts(support of strengthening the Clean Air Act and Clean Water Act even if it may cost US jobs)
+1. **Cumulative CES Policy Preferences** which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to only one of these policy preferences enviro_carbon. The question asked to respondents on this policy preference asked whether the respondent believe that the power should be **given** to the Environmental Protection Agency to regulate carbon dioxide emissions. 
 
-2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. A few of said variables involve demographic variables such as race and gender, geographical location, partisan identity, and family income. 
+
+2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. The main variables I will focus on in this report are race and gender demographics along with political ideologies. 
 
 The research design is observational with correlational analysis that makes no assumptions about causal relationships. 
 
-As detailed above outcome variables analyzed in this report were found in the Cumulative CES Policy Preference data and are the 3 environmental policies noted above.
 
-These preferences were obtained through a survey where respondents could select support or oppose for the policies presented. With this in mind, each of the outcome variable 
-```{r}
+The Cumulative CES Policy Preferences data provides the outcome variable, **enviro_carbon**. This preference were obtained through a survey where respondents could select support or oppose for the policy. With this in mind, this of the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of EPA carbon regulation within the entirety of the country, and second, the proportion of support across every county within the US.
+
+
+```{r, echo = FALSE}
 outcome_ces |>
   ggplot()+
   geom_bar(
@@ -59,67 +61,35 @@ outcome_ces |>
       y = ..count../sum(..count..)
     ), width = .25
   ) +
-  labs(title = "Distribution of Carbon Regulation Policy Support",
-       x = "Support for Increased Carbon Regulation",
+  labs(title = "Distribution of EPA Carbon Regulation Support(Country Level)",
+       x = "EPA Carbon Regulation Preference",
        y = "Proportion",
        caption = "Source: Cumulative CES Policy Preferences")
  
 
 ```
-```{r}
-outcome_ces |>
-  ggplot()+
-  geom_bar(
-    aes(
-      x = enviro_renewable,
-      y = ..count../sum(..count..)
-    ), width = .25
-  ) +
-  labs(title = "Distribution of Increased Renewable Energy Support",
-       x = "Support for Increased Renewable Energy",
-       y = "Proportion",
-       caption = "Source: Cumulative CES Policy Preferences")
-```
-```{r}
-outcome_ces |>
-  ggplot()+
-  geom_bar(
-    aes(
-      x = enviro_airwateracts,
-      y = ..count../sum(..count..)
-    ), width = .25
-  ) +
-  labs(title = "Distribution of Support for increased enforcement of CWA/CAA",
-       x = "Support for Increased Enforcement",
-       y = "Proportion",
+```{r, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(average = mean(carbon, na.rm = TRUE)) |>
+  ggplot(aes(x = average)) +
+  geom_histogram(aes(y = ..density..))+
+  labs(title = "Distribution of County Level Proportions of Support",
+       x = "Propotion of Support for EPA Carbon Regulation",
+       y = "Density",
        caption = "Source: Cumulative CES Policy Preferences")
 ```
 
+The range of proportion as seen in the second plot is anywhere from 0 to 1 meaning that there are some examples of counties where no respondents supported the policy, and some counties where all respondents supported the county.  
+
 ## Results 
+```{r}
+
+```
 
 ## Conclusion 
 
-```{r}
-library(tidyverse)
-library(haven)
-library(sjlabelled)
-library(broom)
-```
-
-```{r, echo = FALSE}
-ces <- left_join(
-read_dta("cumulative_2006-2021.dta"),
-read_dta("cumulative_ces_policy_preferences.dta")
-) |>
-sjlabelled::as_label()
-
-
-```
-```{r}
-outcome_ces <- ces |>
-  select("year", "case_id", "weight", "weight_cumulative", "state", "county_fips", "enviro_carbon", "enviro_renewable", "enviro_airwateracts") |>
-  drop_na()
-```
 
 
 ```{r Avergy Support for Renewables across US Counties, echo = FALSE}
@@ -134,12 +104,91 @@ ces |>
 ```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
 ces |>
   filter(employ %in% c("Full-Time", "Unemployed")) |>
-  mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
   group_by(county_fips) |>
   summarize(
-    average = mean(renewable, na.rm = TRUE),
+    average = mean(carbon, na.rm = TRUE),
     prop_unemployed = mean(employ == "Unemployed", na.rm = TRUE)) |>
   ggplot(aes(x = prop_unemployed, y = average)) +
   geom_point(shape = 1) +
   geom_smooth(method = "lm")
 ```
+
+
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  filter(employ %in% c("Full-Time", "Unemployed")) |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_unemployed = mean(employ == "Unemployed", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_unemployed, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")
+```
+
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_no_highschool = mean(educ == "4-Year", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_no_highschool, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")
+```
+
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_Liberal = mean(ideo5 == "Very Liberal", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_Liberal, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)
+```
+
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_high_inc = mean(faminc == "Less than 10k", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_high_inc, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)
+```
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_missouri = mean(state == "California", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_missouri, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)
+```
+```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0),
+         Nonwhite = if_else(race == "White", 0, 1)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_nonwhite = (mean(Nonwhite, na.rm = TRUE))) |>
+  ggplot(aes(x = prop_nonwhite, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)
+```
+
+
