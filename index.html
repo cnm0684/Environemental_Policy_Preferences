@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Minority Prop vs. CRPP-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Education-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Ideology-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Income-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Race-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. State-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/figure-html5/Multivariate Analysis Female Proportion vs. CRPP-1.png","index_files/figure-html5/Multivariate Analysis-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Minority Prop vs. CRPP-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Education-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Ideology-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Income-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Race-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. State-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/figure-html5/Multivariate Analysis Female Proportion vs. CRPP-1.png","index_files/figure-html5/Multivariate Analysis-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/kePrint-0.0.1/kePrint.js","index_files/lightable-0.0.1/lightable.css","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.15/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1557,26 +1559,172 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/Bivariate%20Analysis%20of%20Support%20vs.%20Ideology-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <p>The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and support for EPA regulation on carbon. The following regression will provide more information on these positive relationships.</p>
+<h2 id="regression">Regression</h2>
+<p>In this report two regression models are detailed. The first is a bivariate model that regresses the proportion of support for carbon regulation on proportion of minorities. The second is a multivariate model which will include additional covariates such as proportions of liberals, women, and unemployed people.</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-Call:
-lm(formula = carbon ~ Nonwhite, data = edited_ces)
 
-Coefficients:
-(Intercept)     Nonwhite  
-     0.6497       0.1038  </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-Call:
-lm(formula = carbon ~ Nonwhite + liberal + unemployed, data = edited_ces)
 
-Coefficients:
-(Intercept)     Nonwhite      liberal   unemployed  
-    0.59896      0.09185      0.28640      0.02239  </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Coef. estimate
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Std. error
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+P-value
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Coefficient
+</th>
+<th style="text-align:right;">
+Bivariate
+</th>
+<th style="text-align:right;">
+Multivariate
+</th>
+<th style="text-align:right;">
+Bivariate
+</th>
+<th style="text-align:right;">
+Multivariate
+</th>
+<th style="text-align:right;">
+Bivariate
+</th>
+<th style="text-align:right;">
+Multivariate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+0.54
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonwhite
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+unemployed
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <h2 id="conclusion">Conclusion</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

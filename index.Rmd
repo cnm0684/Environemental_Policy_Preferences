@@ -13,7 +13,7 @@ library(sjlabelled)
 library(haven)
 library(ggridges)
 library(broom)
-
+library(kableExtra)
 options(
   knitr.kable.NA = '',
   width = 100)
@@ -151,24 +151,53 @@ ces |>
 
 The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and support for EPA regulation on carbon. The following regression will provide more information on these positive relationships. 
 
+## Regression
+
+In this report two regression models are detailed. The first is a bivariate model that regresses the proportion of support for carbon regulation on proportion of minorities. The second is a multivariate model which will include additional covariates such as proportions of liberals, women, and unemployed people.
 
 ```{r Bivariate Regression, echo = FALSE}
 edited_ces <- ces |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0),
-         Nonwhite = if_else(race == "White", 0, 1),
-         liberal = if_else(ideo5 == "Liberal", 1, 0),
-         unemployed = if_else(employ == "Unemployed", 1, 0))
+  mutate(carbon = ifelse(enviro_carbon == "Support", 1, 0),
+         Nonwhite = ifelse(race == "White", 0, 1),
+         liberal = ifelse(ideo5 == "Liberal", 1, 0),
+         unemployed = ifelse(employ == "Unemployed", 1, 0),
+         female = ifelse(gender == "Female", 1, 0))
 
-reg_1 <- lm(data = edited_ces,
+mod1 <- lm(data = edited_ces,
    carbon ~ Nonwhite)
-reg_1
 ```
 ```{r multivariate regresssion, echo = FALSE}
-reg_2 <- lm(data = edited_ces,
-   carbon ~ Nonwhite + liberal + unemployed)
-reg_2
+mod2 <- lm(data = edited_ces,
+   carbon ~ Nonwhite + liberal + unemployed + female)
+
 ```
 
+
+```{r, echo = FALSE}
+results <-
+  full_join(
+    mod1 |> 
+      broom::tidy() |> 
+      select(term, est1 = estimate, se1 = std.error, pval1 = p.value),
+    mod2 |> 
+      broom::tidy() |> 
+      select(term, est2 = estimate, se2 = std.error, pval2 = p.value)) |>
+  select(term, matches("est"), matches("se"), matches ("pval")) 
+
+results |>
+  knitr::kable(
+    booktabs = TRUE, digits = 2,
+    col.names = c("Coefficient", rep(c("Bivariate", "Multivariate"), 3))) |>
+  kable_styling(
+    position = "center", 
+    latex_options = "HOLD_position") |>
+  add_header_above(
+    header = c(
+      " " = 1, 
+      "Coef. estimate" = 2, 
+      "Std. error" = 2, 
+      "P-value" = 2))
+```
 
 
 ## Conclusion 
