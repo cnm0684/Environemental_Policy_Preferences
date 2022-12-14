@@ -155,6 +155,8 @@ The line of best fit that has been drawn in each of these plots shows us that th
 
 In this report two regression models are detailed. The first is a bivariate model that regresses the proportion of support for carbon regulation on proportion of minorities. The second is a multivariate model which will include additional covariates such as proportions of liberals, women, and unemployed people.
 
+Regressions shows that a statistically significant, positive correlation, exists between proportion of minorities and support for EPA regulation of carbon. 
+
 ```{r Bivariate Regression, echo = FALSE}
 edited_ces <- ces |>
   mutate(carbon = ifelse(enviro_carbon == "Support", 1, 0),
@@ -171,8 +173,6 @@ mod2 <- lm(data = edited_ces,
    carbon ~ Nonwhite + liberal + unemployed + female)
 
 ```
-
-
 ```{r, echo = FALSE}
 results <-
   full_join(
@@ -198,9 +198,19 @@ results |>
       "Std. error" = 2, 
       "P-value" = 2))
 ```
+### Bivariate Model Interpretation
+The bivariate model shows that for an increase of 1 unit in minority there is a .10 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities (defined as anyone who is nonwhite), the proportion of people who support EPA Regulation of carbon will be .10 or 10 percent larger than if that group included no minorities. This regression also estimates that the proportion of support in a group of no minorities is about .65 or 65 percent. 
 
+The standard error was negligible and the p-value for the minority coefficient was 0. The importance of this p-value will be discussed further under the Statistical Significance section. 
 
-## Conclusion 
+### Multivariate Model Interpretation
+The multivariate model shows a slightly lower association as the covariates are added. It shows that when you hold ideological affiliation, employment status, and gender constant, a 1 unit increase in minority will yield a .08 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities, the proportion of people who support EPA Regulation of carbon will be .08 or 8 percent larger, considering demographics of ideology, employment, and gender remaining constant. This regression estimates that the proportion of support when all of the analyzed explanatory variables are 0 will be about .54 or 54 percent. This means that, according to the regression a population consisting of no minorities, liberals, women, and unemployed people will result in a proportion of support around 54 percent. 
+
+Similar to the bivariate model the standard error was negligible and the p-value for the minority coefficient was 0.  
+
+### Statistical Significance 
+In both of the above regression models, the correlation between the minority explanatory value and the support for EPA Regulation on carbon is statistically significant at the test level of $\alpha = 0.05$. This is shown because the p-value on the coefficient representing minority identification is 0 in both models. Because it is hypothesized that the correlation between minority identification and support for EPA Regulation on Carbon is nonzero, the p-value of 0 indicates that the regression's estimated correlation coefficient has a near 0 percent probability of being extreme and meaningless and that there is a near 100 percent probability that the estimated correlation is not due to random chance. Both of these are because the estimated correlation is so unique to the null distribution that it must be statistically significant. 
+# Conclusion 
 
 
 

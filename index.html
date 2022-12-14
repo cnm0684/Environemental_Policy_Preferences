@@ -1561,6 +1561,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and support for EPA regulation on carbon. The following regression will provide more information on these positive relationships.</p>
 <h2 id="regression">Regression</h2>
 <p>In this report two regression models are detailed. The first is a bivariate model that regresses the proportion of support for carbon regulation on proportion of minorities. The second is a multivariate model which will include additional covariates such as proportions of liberals, women, and unemployed people.</p>
+<p>Regressions shows that a statistically significant, positive correlation, exists between proportion of minorities and support for EPA regulation of carbon.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1723,7 +1724,15 @@ female
 </tbody>
 </table>
 </div>
-<h2 id="conclusion">Conclusion</h2>
+<h3 id="bivariate-model-interpretation">Bivariate Model Interpretation</h3>
+<p>The bivariate model shows that for an increase of 1 unit in minority there is a .10 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities (defined as anyone who is nonwhite), the proportion of people who support EPA Regulation of carbon will be .10 or 10 percent larger than if that group included no minorities. This regression also estimates that the proportion of support in a group of no minorities is about .65 or 65 percent.</p>
+<p>The standard error was negligible and the p-value for the minority coefficient was 0. The importance of this p-value will be discussed further under the Statistical Significance section.</p>
+<h3 id="multivariate-model-interpretation">Multivariate Model Interpretation</h3>
+<p>The multivariate model shows a slightly lower association as the covariates are added. It shows that when you hold ideological affiliation, employment status, and gender constant, a 1 unit increase in minority will yield a .08 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities, the proportion of people who support EPA Regulation of carbon will be .08 or 8 percent larger, considering demographics of ideology, employment, and gender remaining constant. This regression estimates that the proportion of support when all of the analyzed explanatory variables are 0 will be about .54 or 54 percent. This means that, according to the regression a population consisting of no minorities, liberals, women, and unemployed people will result in a proportion of support around 54 percent.</p>
+<p>Similar to the bivariate model the standard error was negligible and the p-value for the minority coefficient was 0.</p>
+<h3 id="statistical-significance">Statistical Significance</h3>
+<p>In both of the above regression models, the correlation between the minority explanatory value and the support for EPA Regulation on carbon is statistically significant at the test level of <span class="math inline">\(\alpha = 0.05\)</span>. This is shown because the p-value on the coefficient representing minority identification is 0 in both models. Because it is hypothesized that the correlation between minority identification and support for EPA Regulation on Carbon is nonzero, the p-value of 0 indicates that the regression’s estimated correlation coefficient has a near 0 percent probability of being extreme and meaningless and that there is a near 100 percent probability that the estimated correlation is not due to random chance. Both of these are because the estimated correlation is so unique to the null distribution that it must be statistically significant.
+# Conclusion</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -1732,6 +1741,15 @@ female
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
