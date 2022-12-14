@@ -7,12 +7,25 @@ output:
     self_contained: false
 ---
 
+```{r}
+
+options(
+  knitr.kable.NA = '',
+  width = 100)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center")
+```
+
 
 
 ```{r}
 library(tidyverse)
 library(sjlabelled)
 library(haven)
+library(ggridges)
 ```
 
 ## Project Proposal 
@@ -33,6 +46,55 @@ To investigate these relationships I relied on data from 2 different sources.
 2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. A few of said variables involve demographic variables such as race and gender, geographical location, partisan identity, and family income. 
 
 The research design is observational with correlational analysis that makes no assumptions about causal relationships. 
+
+As detailed above outcome variables analyzed in this report were found in the Cumulative CES Policy Preference data and are the 3 environmental policies noted above.
+
+These preferences were obtained through a survey where respondents could select support or oppose for the policies presented. With this in mind, each of the outcome variable 
+```{r}
+outcome_ces |>
+  ggplot()+
+  geom_bar(
+    aes(
+      x = enviro_carbon,
+      y = ..count../sum(..count..)
+    ), width = .25
+  ) +
+  labs(title = "Distribution of Carbon Regulation Policy Support",
+       x = "Support for Increased Carbon Regulation",
+       y = "Proportion",
+       caption = "Source: Cumulative CES Policy Preferences")
+ 
+
+```
+```{r}
+outcome_ces |>
+  ggplot()+
+  geom_bar(
+    aes(
+      x = enviro_renewable,
+      y = ..count../sum(..count..)
+    ), width = .25
+  ) +
+  labs(title = "Distribution of Increased Renewable Energy Support",
+       x = "Support for Increased Renewable Energy",
+       y = "Proportion",
+       caption = "Source: Cumulative CES Policy Preferences")
+```
+```{r}
+outcome_ces |>
+  ggplot()+
+  geom_bar(
+    aes(
+      x = enviro_airwateracts,
+      y = ..count../sum(..count..)
+    ), width = .25
+  ) +
+  labs(title = "Distribution of Support for increased enforcement of CWA/CAA",
+       x = "Support for Increased Enforcement",
+       y = "Proportion",
+       caption = "Source: Cumulative CES Policy Preferences")
+```
+
 ## Results 
 
 ## Conclusion 
@@ -41,6 +103,7 @@ The research design is observational with correlational analysis that makes no a
 library(tidyverse)
 library(haven)
 library(sjlabelled)
+library(broom)
 ```
 
 ```{r, echo = FALSE}
@@ -52,6 +115,12 @@ sjlabelled::as_label()
 
 
 ```
+```{r}
+outcome_ces <- ces |>
+  select("year", "case_id", "weight", "weight_cumulative", "state", "county_fips", "enviro_carbon", "enviro_renewable", "enviro_airwateracts") |>
+  drop_na()
+```
+
 
 ```{r Avergy Support for Renewables across US Counties, echo = FALSE}
 ces |>
