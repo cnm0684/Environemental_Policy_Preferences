@@ -1,7 +1,7 @@
 ---
-title: "Gov 50 Final Project"
+title: "Environmental Policy Preference Across Demographics and Ideology"
 author: "Chris Mesfin"
-description: "My final project"
+description: "GOV 50 Final Project: Data Analysis"
 output:
   distill::distill_article:
     self_contained: false
@@ -13,6 +13,12 @@ library(sjlabelled)
 library(haven)
 library(ggridges)
 library(broom)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center")
 ```
 
 ```{r, echo = FALSE}
@@ -59,7 +65,7 @@ outcome_ces |>
     aes(
       x = enviro_carbon,
       y = ..count../sum(..count..)
-    ), width = .25
+    ), width = .25, fill = "grey20", col = "white"
   ) +
   labs(title = "Distribution of EPA Carbon Regulation Support(Country Level)",
        x = "EPA Carbon Regulation Preference",
@@ -74,7 +80,7 @@ ces |>
   group_by(county_fips) |>
   summarize(average = mean(carbon, na.rm = TRUE)) |>
   ggplot(aes(x = average)) +
-  geom_histogram(aes(y = ..density..))+
+  geom_histogram(aes(y = ..density..), fill = "grey20", col = "white")+
   labs(title = "Distribution of County Level Proportions of Support",
        x = "Propotion of Support for EPA Carbon Regulation",
        y = "Density",
@@ -84,100 +90,20 @@ ces |>
 The range of proportion as seen in the second plot is anywhere from 0 to 1 meaning that there are some examples of counties where no respondents supported the policy, and some counties where all respondents supported the county.  
 
 ## Results 
-```{r}
-
-```
-
-## Conclusion 
-
-
-
-```{r Avergy Support for Renewables across US Counties, echo = FALSE}
-ces |>
-  mutate(renewable = if_else(enviro_renewable == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(average = mean(renewable, na.rm = TRUE)) |>
-  ggplot(aes(x = average)) +
-  geom_histogram(aes(y = ..density..))
-```
-
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
-ces |>
-  filter(employ %in% c("Full-Time", "Unemployed")) |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_unemployed = mean(employ == "Unemployed", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_unemployed, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")
-```
-
-
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
-ces |>
-  filter(employ %in% c("Full-Time", "Unemployed")) |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_unemployed = mean(employ == "Unemployed", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_unemployed, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")
-```
-
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+```{r Multivariate Analysis }
 ces |>
   mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
   group_by(county_fips) |>
   summarize(
     average = mean(carbon, na.rm = TRUE),
-    prop_no_highschool = mean(educ == "4-Year", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_no_highschool, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")
-```
-
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
-ces |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_Liberal = mean(ideo5 == "Very Liberal", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_Liberal, y = average)) +
+    prop_female = mean(gender == "Female", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_female, y = average)) +
   geom_point(shape = 1) +
   geom_smooth(method = "lm")+
   xlim(0,1) + ylim(0,1)
 ```
 
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
-ces |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_high_inc = mean(faminc == "Less than 10k", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_high_inc, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")+
-  xlim(0,1) + ylim(0,1)
-```
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
-ces |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_missouri = mean(state == "California", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_missouri, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")+
-  xlim(0,1) + ylim(0,1)
-```
-```{r Bivariate Analysis of Support vs. Unemployment, echo = FALSE}
+```{r Bivariate Analysis of Support vs. Race, echo = FALSE}
 ces |>
   mutate(carbon = if_else(enviro_carbon == "Support", 1, 0),
          Nonwhite = if_else(race == "White", 0, 1)) |>
@@ -190,5 +116,53 @@ ces |>
   geom_smooth(method = "lm")+
   xlim(0,1) + ylim(0,1)
 ```
+
+```{r Bivariate Analysis of Support vs. Ideology, echo = FALSE}
+##Do thing similar to Race
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_Liberal = mean(ideo5 == "Very Liberal", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_Liberal, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)
+```
+
+
+```{r Bivariate Regression}
+edited_ces <- ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0),
+         Nonwhite = if_else(race == "White", 0, 1),
+         liberal = if_else(ideo5 == "Liberal", 1, 0),
+         unemployed = if_else(employ == "Unemployed", 1, 0))
+
+reg_1 <- lm(data = edited_ces,
+   carbon ~ Nonwhite)
+reg_1
+```
+```{r multivariate regresssion}
+reg_2 <- lm(data = edited_ces,
+   carbon ~ Nonwhite + liberal + unemployed)
+```
+
+
+
+## Conclusion 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
