@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Education-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Ideology-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Income-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Race-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. State-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/figure-html5/Multivariate Analysis-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","cumulative_ces_policy_preferences.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Avergy Support for Renewables across US Counties-1.png","index_files/figure-html5/Bivariate Analysis of Minority Prop vs. CRPP-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Education-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Ideology-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Income-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Race-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. State-1.png","index_files/figure-html5/Bivariate Analysis of Support vs. Unemployment-1.png","index_files/figure-html5/Multivariate Analysis Female Proportion vs. CRPP-1.png","index_files/figure-html5/Multivariate Analysis-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.15/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1528,16 +1528,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h2 id="project-proposal">Project Proposal</h2>
 <p>How can different demographics, geography and socioeconomic status impact approval of climate policy or action on climate change? I hypothesize that the strongest correlation between an explanatory variable and the outcome variable(support for climate policy) will be seen with the separation across partly lines. Additionally there will be a weaker correlation when evaluating race as an explanatory variable. I will test this hypothesis through data collected from the Cumulative CES Policy Preferences which includes policy preferences from 2006 to 2021 and the Cumulative CCES Common Content data which contains many of the explanatory data I will analyze. Both of these data sources are broad surveys that sample random populations across the United States. Throughout my analysis i will use several different explanatory variables which will be in the form of different environmental policies that were surveyed in the CCES data. If I find that there is a greater support for environmental policies among democrats and other demographics that may lean overwhelmingly progressive then my hypothesis will be proven correct. This would be noted by a positive and significant coefficient when I run my regression.</p>
-<h2 id="introduction">Introduction</h2>
+<h1 id="introduction">Introduction</h1>
 <p>Using survey data generated from counties across the United States this project seeks to determine the impact of various demographics, geographic locations, and socioeconomic statuses on various environmental policy preferences.</p>
-<h2 id="data-and-research-design">Data and Research Design</h2>
+<h1 id="data-and-research-design">Data and Research Design</h1>
 <p>To investigate these relationships I relied on data from 2 different sources.</p>
 <ol type="1">
 <li><p><strong>Cumulative CES Policy Preferences</strong> which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to only one of these policy preferences enviro_carbon. The question asked to respondents on this policy preference asked whether the respondent believe that the power should be <strong>given</strong> to the Environmental Protection Agency to regulate carbon dioxide emissions.</p></li>
 <li><p><strong>Cumulative CCES Common Content</strong> which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. The main variables I will focus on in this report are race and gender demographics along with political ideologies.</p></li>
 </ol>
 <p>The research design is observational with correlational analysis that makes no assumptions about causal relationships.</p>
-<p>The Cumulative CES Policy Preferences data provides the outcome variable, <strong>enviro_carbon</strong>. This preference were obtained through a survey where respondents could select support or oppose for the policy. With this in mind, this of the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of EPA carbon regulation within the entirety of the country, and second, the proportion of support across every county within the US.</p>
+<p>The Cumulative CES Policy Preferences data provides the outcome variable, <strong>Support for EPA CO2 Regulation</strong>. This preference were obtained through a survey where respondents could select support or oppose for the policy. With this in mind, this of the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of EPA carbon regulation within the entirety of the country, and second, the proportion of support across every county within the US.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
@@ -1545,16 +1545,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <p>The range of proportion as seen in the second plot is anywhere from 0 to 1 meaning that there are some examples of counties where no respondents supported the policy, and some counties where all respondents supported the county.</p>
-<h2 id="results">Results</h2>
+<h1 id="results">Results</h1>
+<p>Before performing the regression of Support for Carbon Regulation on the identified explanatory variables, the bivariate relationship can be visualized in a scatter plot. Each data point in these plots represents a unique county in the US with a proportion of CRPP and a proportion for the explanatory variable. The explanatory variable is on the x axis and CRPP is on the y axis.</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="index_files/figure-html5/Multivariate%20Analysis-1.png" width="624" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html5/Multivariate%20Analysis%20Female%20Proportion%20vs.%20CRPP-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="index_files/figure-html5/Bivariate%20Analysis%20of%20Support%20vs.%20Race-1.png" width="624" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html5/Bivariate%20Analysis%20of%20Minority%20Prop%20vs.%20CRPP-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/Bivariate%20Analysis%20of%20Support%20vs.%20Ideology-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
+<p>The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and support for EPA regulation on carbon. The following regression will provide more information on these positive relationships.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>
 Call:
@@ -1565,10 +1567,16 @@ Coefficients:
      0.6497       0.1038  </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Call:
+lm(formula = carbon ~ Nonwhite + liberal + unemployed, data = edited_ces)
 
+Coefficients:
+(Intercept)     Nonwhite      liberal   unemployed  
+    0.59896      0.09185      0.28640      0.02239  </code></pre>
 </div>
 <h2 id="conclusion">Conclusion</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
