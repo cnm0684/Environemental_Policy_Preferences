@@ -163,14 +163,16 @@ edited_ces <- ces |>
          Nonwhite = ifelse(race == "White", 0, 1),
          liberal = ifelse(ideo5 == "Liberal", 1, 0),
          unemployed = ifelse(employ == "Unemployed", 1, 0),
-         female = ifelse(gender == "Female", 1, 0))
+         female = ifelse(gender == "Female", 1, 0),
+         haschildren = ifelse(has_child == "Yes", 1, 0),
+         democrat = ifelse(pid3_leaner == "Democrat (Including Leaners)", 1, 0))
 
 mod1 <- lm(data = edited_ces,
    carbon ~ Nonwhite)
 ```
 ```{r multivariate regresssion, echo = FALSE}
 mod2 <- lm(data = edited_ces,
-   carbon ~ Nonwhite + liberal + unemployed + female)
+   carbon ~ Nonwhite + liberal + unemployed + female + democrat)
 
 ```
 ```{r, echo = FALSE}
@@ -210,10 +212,25 @@ Similar to the bivariate model the standard error was negligible and the p-value
 
 ### Statistical Significance 
 In both of the above regression models, the correlation between the minority explanatory value and the support for EPA Regulation on carbon is statistically significant at the test level of $\alpha = 0.05$. This is shown because the p-value on the coefficient representing minority identification is 0 in both models. Because it is hypothesized that the correlation between minority identification and support for EPA Regulation on Carbon is nonzero, the p-value of 0 indicates that the regression's estimated correlation coefficient has a near 0 percent probability of being extreme and meaningless and that there is a near 100 percent probability that the estimated correlation is not due to random chance. Both of these are because the estimated correlation is so unique to the null distribution that it must be statistically significant. 
+
+### Causality 
+There are two main reasons that the relationship correlating minority presence to an increase in support for EPA regulation on carbon cannot be diagnosed as causal. The first reason is that the explanatory variable(minority presence) is not randomly assigned among participants which makes it almost impossible to eliminate confounders that may influence the regression. With this being said minority presence and support for EPA regulation on carbon do have a positive correlation that is statistically significant. 
+
+The multivariate regression attempts to control for some of these confounders, for example: ideology. This was analyzed in a variable that identified if the participant identified as liberal or not. The liberal ideology is defined as being a supporter of policies that are socially progressive and promote social welfare. With this definition in mind if a person is liberal they would be more likely to support a policy allowing the EPA to regulate carbon. This positive correlation was seen both within the regression coefficient and in the graph titled "Carbon Regulation Support by Proportion of Liberals" above. 
+
+There are a multitude of other possible confounders such as gender and unemployment which were regarded in the regression. Another confounder could be political affiliation because issues regarding the climate and government regulation tend to be very polarizing across party lines. The presence of these confounders and the fact that many more exist is the second reason this relationship cannot be evaluated as causal because of the wide variety of uncontrolled confounders that may impact the regression. 
+
 # Conclusion 
 
+In this article I sought to explore demographic data on race for correlations in regards to environmental policy preference and in doing such I found a positive and significant relationship inferring that being a minority is correlated to higher support for allowing the EPA to regulate carbon. This correlation was found doing two separate regressions one bivariate where confounders weren't considered and a multivariate where several confounders were taken into consideration. In this multivariate model the correlation between minorities and support was slightly less positive, but still statistically significant. 
 
+With this being said there were some limitations that I ran across when creating this article. One of which was the survey question asked in the CES data I used for my graphs and regressions. The exact wording of the question was "Do you support or oppose each of the following policies: Give the Environmental Protection Agency power to regulate Carbon Dioxide emissions." I believe the presence of the word give in this question instantly alienates portions of the population that are against giving government agencies power that they hadn't already had. This is relevant because it takes away from my question which seeks to find peoples overall preference towards environmental protection through policy. I believe this could be mended by simply removing the give and changing the language of the question to be less politically aggravating so that it would look something like: Do you support or oppose the following policy: Environmental Protection Agency managing Carbon Dioxide levels.
 
+In addition to this limitation an improvement that I would implement is including more possible confounders in the regression to get the most accurate relationship between a person being a minority and their environmental policy preference. 
+
+### Next Steps
+
+Finally, I believe the next path of exploration for the question I proposed would be collecting data from the status quo that analyzes peoples preferences and try to deduce how specific events may influence people's policy preference, for example seeing if people became more favorable post a large public natural disaster or after the passage of a huge climate bill like the Inflation Reduction Act. There are a plethora of relationships that can be explored that can inform how and what kind of policies are feasible. Relationships like the one explored in this article that may open up new horizons for exploration. 
 
 
 
