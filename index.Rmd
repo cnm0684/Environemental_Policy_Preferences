@@ -28,9 +28,9 @@ Using survey data generated from counties across the United States this project 
 
 To investigate these relationships I relied on data from 2 different sources.
 
-1. Cumulative CES Policy Preferences 
+1. **Cumulative CES Policy Preferences** which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to 3 of these preferences enviro_carbon(support of EPA regulation on carbon emmissions), enviro_renewable(support of mandatory minimum levels of renewable energy generation per state), and enviro_airwateracts(support of strengthening the Clean Air Act and Clean Water Act even if it may cost US jobs)
 
-2. Cumulative CCES Common Content
+2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. A few of said variables involve demographic variables such as race and gender, geographical location, partisan identity, and family income. 
 
 The research design is observational with correlational analysis that makes no assumptions about causal relationships. 
 ## Results 
