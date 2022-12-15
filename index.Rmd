@@ -39,26 +39,26 @@ outcome_ces <- ces |>
 ```
 ## Project Proposal 
 
-How can different demographics, geography and socioeconomic status impact approval of climate policy or action on climate change? I hypothesize that the strongest correlation between an explanatory variable and the outcome variable(support for climate policy) will be seen with the separation across partly lines. Additionally there will be a weaker correlation when evaluating race as an explanatory variable. I will test this hypothesis through data collected from the Cumulative CES Policy Preferences which includes policy preferences from 2006 to 2021 and the Cumulative CCES Common Content data which contains many of the explanatory data I will analyze. Both of these data sources are broad surveys that sample random populations across the United States. Throughout my analysis i will use several different explanatory variables which will be in the form of different environmental policies that were surveyed in the CCES data. If I find that there is a greater support for environmental policies among democrats and other demographics that may lean overwhelmingly progressive then my hypothesis will be proven correct. This would be noted by a positive and significant coefficient when I run my regression. 
+How can racial demographics impact climate change policy preference? I hypothesize that there will be a significant correlation between a explanatory variable indicating race and the outcome variable(support for climate policy). I will seek to explore this question and evaluate the correlations that are drawn and whether they are significant or can be evaluated causally. Finding these relationships in regards to policy preferences are extremely important especially in the realm of environmental policy as they can inform strategies for crafting policy that may be universally accepted. I specifically sought to explore if there was a significant correlation between race and support from climate policy as a springboard for exploration into broader topics of environmental justice as if there is a significant correlation then issues of inequity within climate change impacts may be further warranted. 
 
 # Introduction 
 
-Using survey data generated from counties across the United States this project seeks to determine the impact of various demographics, geographic locations, and socioeconomic statuses on various environmental policy preferences. 
-
+Using survey data generated from counties across the United States this project seeks to determine the impact of racial demographics on environmental policy preferences. 
 
 # Data and Research Design 
 
 To investigate these relationships I relied on data from 2 different sources.
 
-1. **Cumulative CES Policy Preferences** which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to only one of these policy preferences enviro_carbon. The question asked to respondents on this policy preference asked whether the respondent believe that the power should be **given** to the Environmental Protection Agency to regulate carbon dioxide emissions. 
+1. **Cumulative CES Policy Preferences** which compiles policy preference question items from Cooperative Election Study (CES) polls over time. Specifically, this data set compiles the results from 557,456 responses across 54 policy preference question items, from 2006-2021. In this report I analyzed the responses in relation to only one of these policy preferences enviro_carbon. The question asked to respondents on this policy preference asked whether the respondent believe that the power should be given to the Environmental Protection Agency to regulate carbon dioxide emissions. 
 
 
-2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. The main variables I will focus on in this report are race and gender demographics along with political ideologies. 
+2. **Cumulative CCES Common Content** which compiles the same policy preference data from the above data set, but adds several categorical variables that will be of use in this report. The main variables I will focus on in this report are race demographics along with ideological viewpoint, gender, and emplotment status.
 
 The research design is observational with correlational analysis that makes no assumptions about causal relationships. 
 
+### Outcome Variable
 
-The Cumulative CES Policy Preferences data provides the outcome variable, **Support for EPA CO2 Regulation**. This preference were obtained through a survey where respondents could select support or oppose for the policy. With this in mind, this of the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of EPA carbon regulation within the entirety of the country, and second, the proportion of support across every county within the US.
+The Cumulative CES Policy Preferences data provides the outcome variable, **Support for EPA CO2 Regulation (SECR)**. This preference was obtained through a survey where respondents could select support or oppose for the policy. With this in mind, the outcome variable can be demonstrated as a proportion of support to number of respondents. Below are graphics demonstrating first, the overall proportion of support to opposition of SECR within the entirety of the country, and second, the proportion of SECR across every county within the US.
 
 
 ```{r, echo = FALSE}
@@ -71,7 +71,7 @@ outcome_ces |>
     ), width = .25, fill = "grey20", col = "white"
   ) +
   labs(title = "Overall Distribution of EPA Carbon Regulation Support",
-       x = "EPA Carbon Regulation Preference",
+       x = "SECR Preference",
        y = "Proportion",
        caption = "Source: Cumulative CES Policy Preferences")
  
@@ -85,34 +85,29 @@ ces |>
   ggplot(aes(x = average)) +
   geom_histogram(aes(y = ..density..), fill = "grey20", col = "white")+
   labs(title = "Distribution of County Level Proportions of Support",
-       x = "Propotion of Support for EPA Carbon Regulation",
+       x = "Propotion of SECR",
        y = "Density",
        caption = "Source: Cumulative CES Policy Preferences;\nCumulative CCES Common Content")
 ```
 
 The range of proportion as seen in the second plot is anywhere from 0 to 1 meaning that there are some examples of counties where no respondents supported the policy, and some counties where all respondents supported the county.  
 
+### Explanatory Variables
+
+In the following section I will present graphs showing the relationship between the explanatory variables and the outcome variable. The explanatory variables were all taken from the Cumulative CCES Common Content data set, below are the variable used.
+
+**Race** - As with all of these variables the data was collected from a survey, the question asked to survey race was simply "What racial or ethnic group best describes you?" Respondents were given the option to choose: White, Black, Hispanic, Asian, Native American, Mixed, Other, or Middle Eastern. For the purposes of this report respondents that answered anything besides White are minorities. 
+
+**Gender** - The question asked for gender was “Are you male or female?” and respondents could select one or the other. Within this report we will look at the proportion of females in relation to proportion of SECR. 
+
+**Ideology** - The question asked for ideology was “In general, how would you describe your own political viewpoint?” Respondents were given 6 options, but in this report I will analyze the proportion liberals in relation to proportion of SECR. 
+
+**Employment Status** - The question asked for employment status was “Which of the following best describes your current employment status?” Respondents were given 9 unique options to choose from, but in this report I will look at one of these options, unemployed.
+
 # Results 
 
-Before performing the regression of Support for Carbon Regulation on the identified explanatory variables, the bivariate relationship can be visualized in a scatter plot. Each data point in these plots represents a unique county in the US with a proportion of CRPP and a proportion for the explanatory variable. The explanatory variable is on the x axis and CRPP is on the y axis. 
+Before performing the regression of Support for Carbon Regulation on the identified explanatory variables, the bivariate relationship can be visualized in a scatter plot. Each data point in these plots represents a unique county in the US with a proportion of CRPP and a proportion for the explanatory variable. The explanatory variable is on the x axis and CRPP is on the y axis. The first plot represents relationship this report seeks to find significant correlations within, and the following two plots represent other explanatory variables that will be used in the multivariate regression in the following section. 
 
-
-```{r Multivariate Analysis Female Proportion vs. CRPP, echo = FALSE}
-ces |>
-  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
-  group_by(county_fips) |>
-  summarize(
-    average = mean(carbon, na.rm = TRUE),
-    prop_female = mean(gender == "Female", na.rm = TRUE)) |>
-  ggplot(aes(x = prop_female, y = average)) +
-  geom_point(shape = 1) +
-  geom_smooth(method = "lm")+
-  xlim(0,1) + ylim(0,1)+
-  labs(title = "Carbon Regulation Support by Proportion of Women",
-       x = "Proportion of Women",
-       y = "Proportion of Support",
-       caption = "Source: Cumulative CES Policy Preferences;\nCumulative CCES Common Content")
-```
 ```{r Bivariate Analysis of Minority Prop vs. CRPP, echo = FALSE}
 ces |>
   mutate(carbon = if_else(enviro_carbon == "Support", 1, 0),
@@ -125,11 +120,29 @@ ces |>
   geom_point(shape = 1) +
   geom_smooth(method = "lm")+
   xlim(0,1) + ylim(0,1)+
-  labs(title = "Carbon Regulation Support by Proportion of Minorities",
+  labs(title = "SECR by Proportion of Minorities",
        x = "Proportion of Minorities",
-       y = "Proportion of Support",
+       y = "Proportion of SECR",
        caption = "Source: Cumulative CES Policy Preferences;\nCumulative CCES Common Content")
 ```
+
+```{r Multivariate Analysis Female Proportion vs. CRPP, echo = FALSE}
+ces |>
+  mutate(carbon = if_else(enviro_carbon == "Support", 1, 0)) |>
+  group_by(county_fips) |>
+  summarize(
+    average = mean(carbon, na.rm = TRUE),
+    prop_female = mean(gender == "Female", na.rm = TRUE)) |>
+  ggplot(aes(x = prop_female, y = average)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "lm")+
+  xlim(0,1) + ylim(0,1)+
+  labs(title = "SECR by Proportion of Women",
+       x = "Proportion of Women",
+       y = "Proportion of SECR",
+       caption = "Source: Cumulative CES Policy Preferences;\nCumulative CCES Common Content")
+```
+
 ```{r Bivariate Analysis of Support vs. Ideology, echo = FALSE}
 ces |>
   mutate(carbon = ifelse(enviro_carbon == "Support", 1, 0),
@@ -142,37 +155,36 @@ ces |>
   geom_point(shape = 1) +
   geom_smooth(method = "lm")+
   xlim(0,1) + ylim(0,1)+
-  labs(title = "Carbon Regulation Support by Proportion of Liberals",
+  labs(title = "SECR by Proportion of Liberals",
        x = "Proportion of Liberals",
-       y = "Proportion of Support",
+       y = "Proportion of SECR",
        caption = "Source: Cumulative CES Policy Preferences;\nCumulative CCES Common Content")
 ```
 
-
-The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and support for EPA regulation on carbon. The following regression will provide more information on these positive relationships. 
+The line of best fit that has been drawn in each of these plots shows us that there is an positive relationship between higher proportions of women, minorities, and liberals, and SECR. The following regression will provide more information on these positive relationships. 
 
 ## Regression
 
-In this report two regression models are detailed. The first is a bivariate model that regresses the proportion of support for carbon regulation on proportion of minorities. The second is a multivariate model which will include additional covariates such as proportions of liberals, women, and unemployed people.
+In this report two regression models are detailed. The first is a bivariate model that regresses the SECR on Race. The second is a multivariate model which will include additional covariates such as ideology, gender, and employment.
 
-Regressions shows that a statistically significant, positive correlation, exists between proportion of minorities and support for EPA regulation of carbon. 
+Regressions shows that a statistically significant, positive correlation, exists between being a minority and SECR. 
 
 ```{r Bivariate Regression, echo = FALSE}
 edited_ces <- ces |>
   mutate(carbon = ifelse(enviro_carbon == "Support", 1, 0),
-         Nonwhite = ifelse(race == "White", 0, 1),
-         liberal = ifelse(ideo5 == "Liberal", 1, 0),
-         unemployed = ifelse(employ == "Unemployed", 1, 0),
-         female = ifelse(gender == "Female", 1, 0),
-         haschildren = ifelse(has_child == "Yes", 1, 0),
-         democrat = ifelse(pid3_leaner == "Democrat (Including Leaners)", 1, 0))
+         Minority = ifelse(race == "White", 0, 1),
+         Liberal = ifelse(ideo5 == "Liberal", 1, 0),
+         Unemployed = ifelse(employ == "Unemployed", 1, 0),
+         Woman = ifelse(gender == "Female", 1, 0),
+         Parent = ifelse(has_child == "Yes", 1, 0),
+         Democrat = ifelse(pid3_leaner == "Democrat (Including Leaners)", 1, 0))
 
 mod1 <- lm(data = edited_ces,
-   carbon ~ Nonwhite)
+   carbon ~ Minority)
 ```
 ```{r multivariate regresssion, echo = FALSE}
 mod2 <- lm(data = edited_ces,
-   carbon ~ Nonwhite + liberal + unemployed + female + democrat)
+   carbon ~ Minority + Liberal + Woman + Unemployed)
 
 ```
 ```{r, echo = FALSE}
@@ -201,22 +213,22 @@ results |>
       "P-value" = 2))
 ```
 ### Bivariate Model Interpretation
-The bivariate model shows that for an increase of 1 unit in minority there is a .10 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities (defined as anyone who is nonwhite), the proportion of people who support EPA Regulation of carbon will be .10 or 10 percent larger than if that group included no minorities. This regression also estimates that the proportion of support in a group of no minorities is about .65 or 65 percent. 
+The bivariate model shows that for an increase of 1 unit in proportion of  minorities there is a .10 unit increase in the proportion of SECR. This can be interpreted as: Within a group of minorities, the proportion of people who support EPA Regulation of carbon will be .10 or 10 percent larger than if that group included no minorities. This regression also estimates that the proportion of SECR in a group of no minorities is about .65 or 65 percent. 
 
 The standard error was negligible and the p-value for the minority coefficient was 0. The importance of this p-value will be discussed further under the Statistical Significance section. 
 
 ### Multivariate Model Interpretation
-The multivariate model shows a slightly lower association as the covariates are added. It shows that when you hold ideological affiliation, employment status, and gender constant, a 1 unit increase in minority will yield a .08 unit increase in the proportion of support of EPA Regulation of carbon. This can be interpreted as: Within a group of minorities, the proportion of people who support EPA Regulation of carbon will be .08 or 8 percent larger, considering demographics of ideology, employment, and gender remaining constant. This regression estimates that the proportion of support when all of the analyzed explanatory variables are 0 will be about .54 or 54 percent. This means that, according to the regression a population consisting of no minorities, liberals, women, and unemployed people will result in a proportion of support around 54 percent. 
+The multivariate model shows a slightly lower association as the covariates are added. It shows that when you hold ideological affiliation, employment status, and gender constant, a 1 unit increase in minority will yield a .08 unit increase in the proportion of SECR. This can be interpreted as: Within a group of minorities, the proportion of people who support EPA Regulation of carbon will be .08 or 8 percent larger than a group with no minorities, considering demographics of ideology, employment, and gender remain constant. This regression estimates that the proportion of SECR when all of the analyzed explanatory variables are 0 will be about .54 or 54 percent. This means that, according to the regression a population consisting of no minorities, liberals, women, and unemployed people will result in a proportion of SECR around 54 percent. 
 
 Similar to the bivariate model the standard error was negligible and the p-value for the minority coefficient was 0.  
 
 ### Statistical Significance 
-In both of the above regression models, the correlation between the minority explanatory value and the support for EPA Regulation on carbon is statistically significant at the test level of $\alpha = 0.05$. This is shown because the p-value on the coefficient representing minority identification is 0 in both models. Because it is hypothesized that the correlation between minority identification and support for EPA Regulation on Carbon is nonzero, the p-value of 0 indicates that the regression's estimated correlation coefficient has a near 0 percent probability of being extreme and meaningless and that there is a near 100 percent probability that the estimated correlation is not due to random chance. Both of these are because the estimated correlation is so unique to the null distribution that it must be statistically significant. 
+In both of the above regression models, the correlation between the minority explanatory value and the support for EPA Regulation on carbon is statistically significant at the test level of $\alpha = 0.05$. This is shown because the p-value on the coefficient representing minority identification is 0 in both models. Because it is hypothesized that the correlation between minority identification and support for SECR is nonzero, the p-value of 0 indicates that the regression's estimated correlation coefficient has a near 0 percent probability of being extreme and meaningless and that there is a near 100 percent probability that the estimated correlation is not due to random chance. Both of these are because the estimated correlation is so unique to the null distribution that it must be statistically significant. 
 
 ### Causality 
-There are two main reasons that the relationship correlating minority presence to an increase in support for EPA regulation on carbon cannot be diagnosed as causal. The first reason is that the explanatory variable(minority presence) is not randomly assigned among participants which makes it almost impossible to eliminate confounders that may influence the regression. With this being said minority presence and support for EPA regulation on carbon do have a positive correlation that is statistically significant. 
+There are two main reasons that the relationship correlating minority presence to an increase in SECR cannot be diagnosed as causal. The first reason is that the explanatory variable(minority presence) is not and can't be randomly assigned among participants which makes it harder to eliminate confounders that may influence the regression. With this being said minority presence and SECR do have a positive correlation that is statistically significant. 
 
-The multivariate regression attempts to control for some of these confounders, for example: ideology. This was analyzed in a variable that identified if the participant identified as liberal or not. The liberal ideology is defined as being a supporter of policies that are socially progressive and promote social welfare. With this definition in mind if a person is liberal they would be more likely to support a policy allowing the EPA to regulate carbon. This positive correlation was seen both within the regression coefficient and in the graph titled "Carbon Regulation Support by Proportion of Liberals" above. 
+The multivariate regression attempts to control for some of these confounders, for example: ideology. This was analyzed in a variable that identified if the participant identified as liberal or not. The liberal ideology is defined as being a supporter of policies that are socially progressive and promote social welfare. With this definition in mind if a person is liberal they would be more likely to support a policy allowing the EPA to regulate carbon. This positive correlation was seen both within the regression coefficient and in the graph titled "SECR by Proportion of Liberals" above. 
 
 There are a multitude of other possible confounders such as gender and unemployment which were regarded in the regression. Another confounder could be political affiliation because issues regarding the climate and government regulation tend to be very polarizing across party lines. The presence of these confounders and the fact that many more exist is the second reason this relationship cannot be evaluated as causal because of the wide variety of uncontrolled confounders that may impact the regression. 
 
@@ -224,9 +236,9 @@ There are a multitude of other possible confounders such as gender and unemploym
 
 In this article I sought to explore demographic data on race for correlations in regards to environmental policy preference and in doing such I found a positive and significant relationship inferring that being a minority is correlated to higher support for allowing the EPA to regulate carbon. This correlation was found doing two separate regressions one bivariate where confounders weren't considered and a multivariate where several confounders were taken into consideration. In this multivariate model the correlation between minorities and support was slightly less positive, but still statistically significant. 
 
-With this being said there were some limitations that I ran across when creating this article. One of which was the survey question asked in the CES data I used for my graphs and regressions. The exact wording of the question was "Do you support or oppose each of the following policies: Give the Environmental Protection Agency power to regulate Carbon Dioxide emissions." I believe the presence of the word give in this question instantly alienates portions of the population that are against giving government agencies power that they hadn't already had. This is relevant because it takes away from my question which seeks to find peoples overall preference towards environmental protection through policy. I believe this could be mended by simply removing the give and changing the language of the question to be less politically aggravating so that it would look something like: Do you support or oppose the following policy: Environmental Protection Agency managing Carbon Dioxide levels.
+With this being said there were some limitations that I ran across when creating this report. One of which was the survey question asked in the CES data I used for my graphs and regressions. The exact wording of the question was "Do you support or oppose each of the following policies: Give the Environmental Protection Agency power to regulate Carbon Dioxide emissions." I believe the presence of the word **give** in this question instantly alienates portions of the population that are against giving government agencies power that they hadn't already had. This is relevant because it takes away from my question which seeks to find peoples overall preference towards environmental protection through policy. I believe this could be mended by simply removing the word give and changing the language of the question to be less politically aggravating so that it would look something like: Do you support or oppose the following policy: Environmental Protection Agency managing Carbon Dioxide levels.
 
-In addition to this limitation an improvement that I would implement is including more possible confounders in the regression to get the most accurate relationship between a person being a minority and their environmental policy preference. 
+In addition to this limitation, an improvement that I would implement is including more possible confounders in the regression to get the most accurate relationship between a person being a minority and their environmental policy preference. 
 
 ### Next Steps
 
